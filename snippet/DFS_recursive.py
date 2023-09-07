@@ -26,6 +26,7 @@ def research(x, y):
 
 
 flag_set = set()
+ans_list = []
 
 
 def research2(n):
@@ -35,8 +36,10 @@ def research2(n):
     flag_set.add(n)
     global ans
     ans = max(ans, n)
+    ans_list.append(n)
     for i in graph[n]:
         research(i)
+    ans_list.append(n)
 
 
 def find_index_2d(my_list, target):

@@ -1,3 +1,4 @@
+from itertools import combinations
 import pypyjit
 from collections import Counter
 import collections
@@ -76,6 +77,7 @@ array2_2D = copy.deepcopy(array_2D)
 flag_list = [[False] * (M) for _ in range(N)]  # N✖️Mの2次元配列を作成
 
 DP = [[0 for _ in range(M)] for _ in range(N)]  # N✖️Mの2次元配列を作成
+DP = [[0]*M for _ in range(N)]
 
 array_2D_transpose = list(zip(*array_2D))  # 二次元listの転置
 
@@ -120,7 +122,7 @@ def find_indexes_2D(A_list, target_value):
     if len(found_indexes) > 0:
         return found_indexes
     else:
-        raise ValueError(f"Value {target_value} not found in the given matrix.")
+        return []
 
 
 def max_2D(A_list):
@@ -170,13 +172,13 @@ while ok - ng > 1:
 
 
 # 与えられた文字列の各文字の出現回数をカウント
-w = input()
-dict_str = {}
-for i in range(len(w)):
-    dict_str[w[i]] = dict_str.get(w[i], 0) + 1
+# w = input()
+# dict_str = {}
+# for i in range(len(w)):
+#     dict_str[w[i]] = dict_str.get(w[i], 0) + 1
 
-for value in dict_str.values():
-    pass
+# for value in dict_str.values():
+#     pass
 
 # 隣接リスト 辺重みなし
 N, M = map(int, input().split())
@@ -256,3 +258,17 @@ def prime_factorize(n):
 
 
 c = collections.Counter(prime_factorize(840))
+
+
+def split_into_two_groups(lst):
+    n = len(lst)
+    result = []
+    for i in range(1, n//2 + 1):
+        for comb in combinations(lst, i):
+            first_group = list(comb)
+            second_group = [item for item in lst if item not in first_group]
+            result.append((first_group, second_group))
+            result.append((second_group, first_group))  # 重複を許す
+    result.append((lst, []))
+    result.append(([], lst))  # 重複を許す
+    return result
