@@ -10,27 +10,34 @@ import itertools
 import bisect
 from functools import lru_cache, cmp_to_key
 from collections import defaultdict, deque
+
 sys.setrecursionlimit(10**6)
-pypyjit.set_param('max_unroll_recursion=-1')
+pypyjit.set_param("max_unroll_recursion=-1")
 
 
-def input(): return sys.stdin.readline()[:-1]
+def input():
+    return sys.stdin.readline()[:-1]
 
 
 # def ceil(A, B): return (A - 1 + B) // B
 
-def ceil(A, B): return int(-(-A//B))
+
+def ceil(A, B):
+    return int(-(-A // B))
 
 
-def floor(A, B): return A // B
+def floor(A, B):
+    return A // B
+
+
 # 10**iの位で切り下げ
 # A//10**i*10**i
 
 
 def round(A, i):
     # 10**iの位で四捨五入
-    A += 5*10**i
-    A = A//(10**(i+1))*(10**(i+1))
+    A += 5 * 10**i
+    A = A // (10 ** (i + 1)) * (10 ** (i + 1))
     return A
 
 
@@ -46,7 +53,9 @@ A = [list(map(int, input().split())) for _ in range(N)]
 
 A, B = zip(*[map(int, input().split()) for _ in range(N)])  # 縦一次元リスト二つに分ける
 
-l, S = map(list, zip(*[map(int, input().split()) for _ in range(N)]))  # 縦一次元リストと二次元リストに分ける
+l, S = map(
+    list, zip(*[map(int, input().split()) for _ in range(N)])
+)  # 縦一次元リストと二次元リストに分ける
 
 A = [list(list(input())) for _ in range(N)]  # 文字列を二次元listに格納
 
@@ -57,7 +66,7 @@ S_P = [[s, int(p)] for s, p in (input().split() for _ in range(N))]  # 文字列
 C = Counter(map(int, input().split()))  # 出現回数をカウント
 ans = 0
 for c in C:
-    ans += C[c]//2
+    ans += C[c] // 2
 
 print(*S)
 array = []
@@ -77,7 +86,7 @@ array2_2D = copy.deepcopy(array_2D)
 flag_list = [[False] * (M) for _ in range(N)]  # N✖️Mの2次元配列を作成
 
 DP = [[0 for _ in range(M)] for _ in range(N)]  # N✖️Mの2次元配列を作成
-DP = [[0]*M for _ in range(N)]
+DP = [[0] * M for _ in range(N)]
 
 array_2D_transpose = list(zip(*array_2D))  # 二次元listの転置
 
@@ -100,7 +109,7 @@ for pro in product((0, 1), repeat=N):  # 全bit探索
 
 A_all = list(itertools.permutations(A))  # 順列全探索
 
-INF = 10 ** 18
+INF = 10**18
 
 
 def find_indexes(char_list, char):
@@ -112,6 +121,7 @@ def find_indexes(char_list, char):
 #         if target in x:
 #             return (i, x.index(target))
 #     raise ValueError("'{target}' is not in list".format(target=target))
+
 
 def find_indexes_2D(A_list, target_value):
     found_indexes = []
@@ -161,7 +171,7 @@ def check(k):
     return sum(k >= a for a in A) >= sum(k <= b for b in B)
 
 
-ok = 10 ** 9 + 10
+ok = 10**9 + 10
 ng = 0
 while ok - ng > 1:
     mid = ok + ng >> 1
@@ -169,7 +179,22 @@ while ok - ng > 1:
         ok = mid
     else:
         ng = mid
+# -------------------------------#
+a = 3
 
+ans = bisect.bisect_left(A, a)
+print(ans)
+
+ok = len(A) - 1
+ng = 0
+while ok - ng > 1:
+    mid = (ok + ng) // 2
+    if A[mid] >= a:
+        ok = mid
+    else:
+        ng = mid
+print(ok)
+# -------------------------------#
 
 # 与えられた文字列の各文字の出現回数をカウント
 # w = input()
@@ -186,8 +211,8 @@ graph = [[] for _ in range(N)]
 graph = defaultdict(list)
 for _ in range(M):
     a, b = map(int, input().split())
-    graph[a-1].append(b-1)
-    graph[b-1].append(a-1)  # 有向グラフなら消す
+    graph[a - 1].append(b - 1)
+    graph[b - 1].append(a - 1)  # 有向グラフなら消す
 print(graph)  # [[2, 3, 5], ..., [1, 3, 4]]
 
 
@@ -196,8 +221,8 @@ n, m = map(int, input().split())
 graph = [[] for _ in range(n)]
 for _ in range(n):
     u, v, w = map(int, input().split())
-    graph[u-1].append([v-1, w])
-    graph[v-1].append([u-1, w])  # 有向グラフなら消す
+    graph[u - 1].append([v - 1, w])
+    graph[v - 1].append([u - 1, w])  # 有向グラフなら消す
 print(graph)  # [[2, 3], [3, 1], [5, 9]], ..., [...]]
 
 
@@ -221,40 +246,56 @@ class Compress:
             return [self.original[e] for e in A]
         if type(A) == int:
             return self.original[A]
+
+
 # a,bの最大公約数
-
-
 def gcd(a, b):
     while b:
         a, b = b, a % b
     return a
 
+
 # a,bの最小公倍数
-
-
 def lcm(a, b):
     return a * b // gcd(a, b)
 
 
-def prime_factorize(n):
-    if n < 1:
-        raise ValueError("nは1以上の整数を入力してください")
-    if n == 1:
-        return [1]
-    a = []
-    while n % 2 == 0:
-        a.append(2)
-        n //= 2
+# 約数列挙
+def getDivisors(n: int):
+    # validation check
+    if not isinstance(n, int):
+        raise ("[ERROR] parameter must be integer")
+    if n < 0:
+        raise ("[ERROR] parameter must be not less than 0 (n >= 0)")
+
+    lowerDivisors, upperDivisors = [], []
+    i = 1
+    while i * i <= n:
+        if n % i == 0:
+            lowerDivisors.append(i)
+            if i != n // i:
+                upperDivisors.append(n // i)
+        i += 1
+    return lowerDivisors + upperDivisors[::-1]
+
+
+def prime_factorize(N):
+    if N <= 0:
+        raise ValueError("N must be positive integer.")
+    p = defaultdict(int)
+    while N % 2 == 0:
+        p[2] += 1
+        N //= 2
     f = 3
-    while f * f <= n:
-        if n % f == 0:
-            a.append(f)
-            n //= f
+    while f * f <= N:
+        if N % f == 0:
+            p[f] += 1
+            N //= f
         else:
             f += 2
-    if n != 1:
-        a.append(n)
-    return a
+    if N != 1:
+        p[N] += 1
+    return p
 
 
 c = collections.Counter(prime_factorize(840))
@@ -263,7 +304,7 @@ c = collections.Counter(prime_factorize(840))
 def split_into_two_groups(lst):
     n = len(lst)
     result = []
-    for i in range(1, n//2 + 1):
+    for i in range(1, n // 2 + 1):
         for comb in combinations(lst, i):
             first_group = list(comb)
             second_group = [item for item in lst if item not in first_group]
@@ -272,3 +313,11 @@ def split_into_two_groups(lst):
     result.append((lst, []))
     result.append(([], lst))  # 重複を許す
     return result
+
+
+from decimal import Decimal
+
+A, B = input().split()
+a = Decimal(A)
+b = Decimal(B)
+c = a * b
