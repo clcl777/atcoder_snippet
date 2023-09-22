@@ -65,12 +65,12 @@ class BIT:
     def less_than_x(self, x):
         if not 0 <= x < self.N:
             raise ("[ERROR] index out of range")
-        return self.lower_bound(self.sum(x))
+        return self.lower_bound(self.sum(x)) - 1
 
     def more_than_x(self, x):
         if not 0 <= x < self.N:
             raise ("[ERROR] index out of range")
-        return self.lower_bound(self.sum(x - 1) + 1)
+        return self.lower_bound(self.sum(x - 1) + 1) - 1
 
     def lower_bound(self, w):
         if w <= 0:
@@ -106,4 +106,5 @@ if __name__ == "__main__":
     bit.print()
     # for i in range(10):
     # print(bit.sum(i))
-    print(bit.range_sum(0, 9))
+    print(bit.less_than_x(3))
+    print(bit.more_than_x(3))
