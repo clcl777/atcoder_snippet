@@ -1,8 +1,10 @@
+# https://ikatakos.com/pot/programming_algorithm/data_structure/binary_indexed_tree
+
 """
     Fenwick-Tree
 
     【説明】
-        1-indexed
+        0-indexed
 
     【コンストラクタ】
         N : 配列のサイズ
@@ -10,28 +12,28 @@
     【メソッド】
         add(i)          : A[i] += x
         update(i, x)    : A[i] = x
-        sum(i)          : A[1] + A[2] + ... + A[i]
+        sum(i)          : A[0] + A[1] + ... + A[i]
         range_sum(l, r) : A[l] + A[l + 1] + ... + A[r]
         get(i)          : A[i]を取得
-        get_all_sum()   : A[1] + A[2] + ... + A[N]
-        lower_bound(w)  : A[1] + A[2] + ... + A[i] >= w となる最小のi
+        get_all_sum()   : A[0] + A[1] + ... + A[N-1]
+        lower_bound(w)  : A[0] + A[1] + ... + A[i] >= w となる最小のi
         more_than_x(x)  : i >= x && A[i] > 0となる最小のiを取得
         less_than_x(x)  : i <= x && A[i] > 0となる最大のiを取得
         print()         : Aを表示
 """
-# https://ikatakos.com/pot/programming_algorithm/data_structure/binary_indexed_tree
 
 
 class BIT:
     def __init__(self, N):
         self.N = N
         self.data = [0] * (N + 1)
-        self.A = [0] * (N + 1)
+        self.A = [0] * N
         self.all_sum = 0
 
     def add(self, i, x):
+        i += 1
         self.all_sum += x
-        self.A[i] += x
+        self.A[i - 1] += x
         while i <= self.N:
             self.data[i] += x
             i += i & -i
@@ -40,6 +42,7 @@ class BIT:
         self.add(i, x - self.A[i])
 
     def sum(self, i):
+        i += 1
         ret = 0
         while i > 0:
             ret += self.data[i]
@@ -53,10 +56,10 @@ class BIT:
         return self.A[i]
 
     def less_than_x(self, x):
-        return self.lower_bound(self.sum(x))
+        return self.lower_bound(self.sum(x - 1))
 
     def more_than_x(self, x):
-        return self.lower_bound(self.sum(x - 1) + 1)
+        return self.lower_bound(self.sum(x))
 
     def lower_bound(self, w):
         if w <= 0:
@@ -71,11 +74,11 @@ class BIT:
                 i += size
             size >>= 1
 
-        return i + 1
+        return i
 
     def get_all_sum(self):
         return self.all_sum
 
     def print(self):
-        print("[index]", " ".join(map(str, [i for i in range(1, self.N + 1)])))
-        print("[value]", " ".join(map(str, [self.A[i] for i in range(1, self.N + 1)])))
+        print("[index]", " ".join(map(str, [i for i in range(self.N)])))
+        print("[value]", " ".join(map(str, [self.A[i] for i in range(self.N)])))
