@@ -4,19 +4,22 @@ from collections import deque
 import sys
 
 
-def input(): return sys.stdin.readline()[:-1]
+def input():
+    return sys.stdin.readline()[:-1]
 
 
-def ceil(A, B): return int(-(-A//B))
+def ceil(A, B):
+    return int(-(-A // B))
 
 
-def floor(A, B): return A // B
+def floor(A, B):
+    return A // B
 
 
 def round(A, i):
     # 10**iの位で四捨五入
-    A += 5*10**i
-    A = A//(10**(i+1))*(10**(i+1))
+    A += 5 * 10**i
+    A = A // (10 ** (i + 1)) * (10 ** (i + 1))
     return A
 
 
@@ -42,7 +45,16 @@ def max_2D(A_list):
 
 alphabet = list("abcdefghijklmnopqrstuvwxyz")
 dydx_4 = [[1, 0], [-1, 0], [0, 1], [0, -1]]  # 上下左右
-dydx_8 = [[1, 0], [-1, 0], [0, 1], [0, -1], [1, 1], [-1, 1], [1, -1], [-1, -1]]  # 上下左右斜め
+dydx_8 = [
+    [1, 0],
+    [-1, 0],
+    [0, 1],
+    [0, -1],
+    [1, 1],
+    [-1, 1],
+    [1, -1],
+    [-1, -1],
+]  # 上下左右斜め
 
 # 　　　∧＿∧
 # 　　 （　´∀｀）
@@ -51,5 +63,6 @@ dydx_8 = [[1, 0], [-1, 0], [0, 1], [0, -1], [1, 1], [-1, 1], [1, -1], [-1, -1]] 
 # ,,|＼＼　o＝＝＝o　 ＼
 # 　　 ＼|￣￣￣￣￣￣ |
 # 　　　　|￣￣￣￣￣￣ |
+
 
 # ----------------------------------------------------------------------------------------------- #

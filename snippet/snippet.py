@@ -10,6 +10,7 @@ import itertools
 import bisect
 from functools import lru_cache, cmp_to_key
 from collections import defaultdict, deque
+import math
 
 sys.setrecursionlimit(10**6)
 pypyjit.set_param("max_unroll_recursion=-1")
@@ -299,6 +300,23 @@ def prime_factorize(N):
 
 
 c = collections.Counter(prime_factorize(840))
+
+
+# 素数列挙
+def sieve_of_eratosthenes(n):
+    prime = [True for i in range(n + 1)]
+    prime[0] = False
+    prime[1] = False
+    sqrt_n = math.ceil(math.sqrt(n))
+    for i in range(2, sqrt_n):
+        if prime[i]:
+            for j in range(2 * i, n + 1, i):
+                prime[j] = False
+    array = []
+    for p in range(n + 1):
+        if prime[p]:
+            array.append(p)
+    return array
 
 
 def split_into_two_groups(lst):
