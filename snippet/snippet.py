@@ -172,8 +172,9 @@ def check(k):
     return sum(k >= a for a in A) >= sum(k <= b for b in B)
 
 
-ok = 10**9 + 10
+ok = 10**9 + 1
 ng = 0
+# 最大値探索と最小値探索でokとngを逆にする
 while abs(ok - ng) > 1:
     mid = ok + ng >> 1
     if check(mid):
