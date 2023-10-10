@@ -157,27 +157,19 @@ def comp(S, T):
 C.sort(key=cmp_to_key(comp))
 
 ans = bisect.bisect_right(A, M)
-left = 0
-right = N - 1
-while right - left > 1:
-    mid = (left + right) // 2
-    if A[mid] < M:
-        left = mid
-    else:
-        right = mid
-ans = right
 
 
-def check(k):
+def isOK(k):
     return sum(k >= a for a in A) >= sum(k <= b for b in B)
 
 
-ok = 10**9 + 1
-ng = 0
+ok = 10**9 + 1  # 条件を満たす領域の最大値
+ng = 0  # 条件を満たさない領域の最小値
+
 # 最大値探索と最小値探索でokとngを逆にする
 while abs(ok - ng) > 1:
     mid = ok + ng >> 1
-    if check(mid):
+    if isOK(mid):
         ok = mid
     else:
         ng = mid
@@ -187,15 +179,6 @@ a = 3
 ans = bisect.bisect_left(A, a)
 print(ans)
 
-ok = len(A) - 1
-ng = 0
-while ok - ng > 1:
-    mid = (ok + ng) // 2
-    if A[mid] >= a:
-        ok = mid
-    else:
-        ng = mid
-print(ok)
 # -------------------------------#
 
 # 与えられた文字列の各文字の出現回数をカウント
