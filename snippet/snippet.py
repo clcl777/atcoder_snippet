@@ -174,7 +174,7 @@ def check(k):
 
 ok = 10**9 + 10
 ng = 0
-while ok - ng > 1:
+while abs(ok - ng) > 1:
     mid = ok + ng >> 1
     if check(mid):
         ok = mid
