@@ -105,7 +105,7 @@ def add_lists(list1, list2):
     return [a + b for a, b in zip(list1, list2)]
 
 
-for pro in product((0, 1), repeat=N):  # 全bit探索
+for pro in product((0, 1), repeat=N):  # bit全探索
     print(pro)
 
 A_all = list(itertools.permutations(A))  # 順列全探索
@@ -163,7 +163,8 @@ def isOK(k):
     return sum(k >= a for a in A) >= sum(k <= b for b in B)
 
 
-ok = 10**9 + 1  # 条件を満たす領域の最大値
+# めぐる式の場合、探索したい範囲の上限、下限より１つずつ大きくする
+ok = N + 1  # 条件を満たす領域の最大値
 ng = 0  # 条件を満たさない領域の最小値
 
 # 最大値探索と最小値探索でokとngを逆にする
@@ -264,6 +265,7 @@ def getDivisors(n: int):
     return lowerDivisors + upperDivisors[::-1]
 
 
+# 素因数分解
 def prime_factorize(N):
     if N <= 0:
         raise ValueError("N must be positive integer.")
