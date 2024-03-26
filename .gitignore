@@ -1,3 +1,9 @@
 src/
 .DS_Store
 __pycache__/
+A.py
+B.py
+C.py
+D.py
+E.py
+test.py
