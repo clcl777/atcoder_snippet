@@ -1,7 +1,10 @@
 from itertools import combinations
-import more_itertools
-from collections import deque
+from collections import defaultdict, deque
 import sys
+
+
+# 上限を600000桁に設定（またはそれ以上の桁数に設定）
+# sys.set_int_max_str_digits(600000)
 
 
 def input():
@@ -44,6 +47,7 @@ def max_2D(A_list):
 
 
 alphabet = list("abcdefghijklmnopqrstuvwxyz")
+ALPHABET = list("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
 dydx_4 = [[1, 0], [-1, 0], [0, 1], [0, -1]]  # 上下左右
 dydx_8 = [
     [1, 0],
@@ -55,6 +59,16 @@ dydx_8 = [
     [1, -1],
     [-1, -1],
 ]  # 上下左右斜め
+
+
+def print_2d_list(A):
+    for a in A:
+        print("".join(map(str, a)))
+
+
+def transpose(A):
+    return list(map(list, zip(*A)))
+
 
 # 　　　∧＿∧
 # 　　 （　´∀｀）

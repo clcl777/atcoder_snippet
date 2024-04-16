@@ -1,10 +1,8 @@
-# https://ikatakos.com/pot/programming_algorithm/data_structure/binary_indexed_tree
-
 """
     Fenwick-Tree
 
     【説明】
-        0-indexed
+        1-indexed
 
     【コンストラクタ】
         N : 配列のサイズ
@@ -12,11 +10,11 @@
     【メソッド】
         add(i)          : A[i] += x
         update(i, x)    : A[i] = x
-        sum(i)          : A[0] + A[1] + ... + A[i]
+        sum(i)          : A[1] + A[2] + ... + A[i]
         range_sum(l, r) : A[l] + A[l + 1] + ... + A[r]
         get(i)          : A[i]を取得
-        get_all_sum()   : A[0] + A[1] + ... + A[N]
-        lower_bound(w)  : A[0] + A[1] + ... + A[i] >= w となる最小のi
+        get_all_sum()   : A[1] + A[2] + ... + A[N]
+        lower_bound(w)  : A[1] + A[2] + ... + A[i] >= w となる最小のi
         more_than_x(x)  : i >= x && A[i] > 0となる最小のiを取得
         less_than_x(x)  : i <= x && A[i] > 0となる最大のiを取得
         print()         : Aを表示
@@ -31,9 +29,6 @@ class BIT:
         self.all_sum = 0
 
     def add(self, i, x):
-        if not 0 <= i < self.N:
-            raise ("[ERROR] index out of range")
-        i += 1
         self.all_sum += x
         self.A[i] += x
         while i <= self.N:
@@ -41,12 +36,9 @@ class BIT:
             i += i & -i
 
     def update(self, i, x):
-        self.add(i, x - self.A[i + 1])
+        self.add(i, x - self.A[i])
 
     def sum(self, i):
-        if not -1 <= i < self.N:
-            raise ("[ERROR] index out of range")
-        i += 1
         ret = 0
         while i > 0:
             ret += self.data[i]
@@ -57,26 +49,13 @@ class BIT:
         return self.sum(r) - self.sum(l - 1)
 
     def get(self, i):
-        if not 0 <= i < self.N:
-            raise ("[ERROR] index out of range")
-        i += 1
         return self.A[i]
 
     def less_than_x(self, x):
-        if not 0 <= x < self.N:
-            raise ("[ERROR] index out of range")
-        index_1 = self.lower_bound(self.sum(x))
-        if index_1 is None:
-            return None
-        return index_1 - 1
+        return self.lower_bound(self.sum(x))
 
     def more_than_x(self, x):
-        if not 0 <= x < self.N:
-            raise ("[ERROR] index out of range")
-        index_1 = self.lower_bound(self.sum(x - 1) + 1)
-        if index_1 is None:
-            return None
-        return index_1 - 1
+        return self.lower_bound(self.sum(x - 1) + 1)
 
     def lower_bound(self, w):
         if w <= 0:
@@ -90,13 +69,14 @@ class BIT:
                 w -= self.data[i + size]
                 i += size
             size >>= 1
+
         return i + 1
 
     def get_all_sum(self):
         return self.all_sum
 
     def print(self):
-        print("[index]", " ".join(map(str, [i for i in range(self.N)])))
+        print("[index]", " ".join(map(str, [i for i in range(1, self.N + 1)])))
         print("[value]", " ".join(map(str, [self.A[i] for i in range(1, self.N + 1)])))
 
 
@@ -104,15 +84,14 @@ if __name__ == "__main__":
     bit = BIT(10)
     # for i in range(10):
     #     bit.update(i, i)
-    # bit.add(0, 1)
     # bit.add(1, 1)
     # bit.add(2, 1)
     # bit.add(5, 1)
     bit.print()
     # for i in range(10):
     # print(bit.sum(i))
-    # print(bit.more_than_x(7))
-    # print(bit.less_than_x(7))
+    print(bit.more_than_x(7))
+    print(bit.less_than_x(7))
     # left_ = bit.less_than_x(3)
     # right_ = bit.more_than_x(3)
     # print(right_ - left_ - 1)
