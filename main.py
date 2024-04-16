@@ -66,8 +66,20 @@ def print_2d_list(A):
         print("".join(map(str, a)))
 
 
-def transpose(A):
+def transpose(A: list):
     return list(map(list, zip(*A)))
+
+
+def cumsum(A: list):
+    B = [0]
+    for a in A:
+        B.append(B[-1] + a)
+    return B
+
+
+def get_from_cumsum(cumsum_A: list, l: int, r: int):
+    # 半開区間 [l, r) の和を取得
+    return cumsum_A[r] - cumsum_A[l]
 
 
 # 　　　∧＿∧
