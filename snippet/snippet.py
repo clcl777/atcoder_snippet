@@ -62,7 +62,9 @@ A = [list(list(input())) for _ in range(N)]  # 文字列を二次元listに格�
 
 A = [list(input()) for _ in range(N)]  # 文字列をlistに格納
 
-S_P = [[s, int(p)] for s, p in (input().split() for _ in range(N))]  # 文字列と数値を分けてlistに格納
+S_P = [
+    [s, int(p)] for s, p in (input().split() for _ in range(N))
+]  # 文字列と数値を分けてlistに格納
 
 C = Counter(map(int, input().split()))  # 出現回数をカウント
 ans = 0
@@ -143,7 +145,16 @@ def max_2D(A_list):
 alphabet = set("abcdefghijklmnopqrstuvwxyz")
 
 dydx = [[1, 0], [-1, 0], [0, 1], [0, -1]]  # 上下左右
-dydx = [[1, 0], [-1, 0], [0, 1], [0, -1], [1, 1], [-1, 1], [1, -1], [-1, -1]]  # 上下左右斜め
+dydx = [
+    [1, 0],
+    [-1, 0],
+    [0, 1],
+    [0, -1],
+    [1, 1],
+    [-1, 1],
+    [1, -1],
+    [-1, -1],
+]  # 上下左右斜め
 
 
 def comp(S, T):
@@ -357,3 +368,6 @@ def runLengthEncodeToString(S: str) -> str:
     for k, v in grouped:
         res += k + str(len(list(v)))
     return res
+
+
+array_2D = defaultdict(lambda: defaultdict(int))

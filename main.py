@@ -5,6 +5,7 @@ import sys
 
 # 上限を600000桁に設定（またはそれ以上の桁数に設定）
 # sys.set_int_max_str_digits(600000)
+# sys.setrecursionlimit(10**6)
 
 
 def input():
