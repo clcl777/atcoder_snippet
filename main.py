@@ -64,7 +64,7 @@ dydx_8 = [
 
 def print_2d_list(A):
     for a in A:
-        print("".join(map(str, a)))
+        print(" ".join(map(str, a)))
 
 
 def transpose(A: list):
