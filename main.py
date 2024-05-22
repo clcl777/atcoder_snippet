@@ -1,6 +1,15 @@
 from itertools import combinations
-from collections import defaultdict, deque
+from collections import Counter
+import collections
 import sys
+import heapq
+import copy
+from itertools import product
+import itertools
+import bisect
+from functools import lru_cache, cmp_to_key
+from collections import defaultdict, deque
+import math
 
 
 # 上限を600000桁に設定（またはそれ以上の桁数に設定）
