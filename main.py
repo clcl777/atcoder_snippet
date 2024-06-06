@@ -4,13 +4,14 @@ import collections
 import sys
 import heapq
 import copy
-from itertools import product
-import itertools
+from itertools import product, accumulate
 import bisect
 from functools import lru_cache, cmp_to_key
 from collections import defaultdict, deque
 import math
+import sys
 
+sys.setrecursionlimit(10**6)
 
 # 上限を600000桁に設定（またはそれ以上の桁数に設定）
 # sys.set_int_max_str_digits(600000)
