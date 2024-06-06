@@ -54,17 +54,13 @@ A = [list(map(int, input().split())) for _ in range(N)]
 
 A, B = zip(*[map(int, input().split()) for _ in range(N)])  # 縦一次元リスト二つに分ける
 
-l, S = map(
-    list, zip(*[map(int, input().split()) for _ in range(N)])
-)  # 縦一次元リストと二次元リストに分ける
+l, S = map(list, zip(*[map(int, input().split()) for _ in range(N)]))  # 縦一次元リストと二次元リストに分ける
 
 A = [list(list(input())) for _ in range(N)]  # 文字列を二次元listに格納
 
 A = [list(input()) for _ in range(N)]  # 文字列をlistに格納
 
-S_P = [
-    [s, int(p)] for s, p in (input().split() for _ in range(N))
-]  # 文字列と数値を分けてlistに格納
+S_P = [[s, int(p)] for s, p in (input().split() for _ in range(N))]  # 文字列と数値を分けてlistに格納
 
 C = Counter(map(int, input().split()))  # 出現回数をカウント
 ans = 0
@@ -371,3 +367,25 @@ def runLengthEncodeToString(S: str) -> str:
 
 
 array_2D = defaultdict(lambda: defaultdict(int))
+
+
+# 2次元累積和
+class cumsum2d:
+    def __init__(self, A):
+        H = len(A)
+        W = len(A[0])
+        self.cum = [[0] * (W + 1) for _ in range(H + 1)]
+
+        for i in range(H):
+            for j in range(W):
+                self.cum[i + 1][j + 1] += self.cum[i + 1][j] + A[i][j]
+
+        for j in range(W):
+            for i in range(H):
+                self.cum[i + 1][j + 1] += self.cum[i][j + 1]
+
+    # [y, y + dy), [x, x + dx)の区間の和
+    def get(self, y, x, dy, dx):
+        ny = y + dy
+        nx = x + dx
+        return self.cum[ny][nx] - self.cum[ny][x] - self.cum[y][nx] + self.cum[y][x]
