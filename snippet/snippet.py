@@ -389,3 +389,15 @@ class cumsum2d:
         ny = y + dy
         nx = x + dx
         return self.cum[ny][nx] - self.cum[ny][x] - self.cum[y][nx] + self.cum[y][x]
+
+
+def hstack(array1, array2):
+    # 横方向に結合
+    concatenated_array = [row1 + row2 for row1, row2 in zip(array1, array2)]
+    return concatenated_array
+
+
+def vstack(array1, array2):
+    # 縦方向に結合
+    concatenated_array = array1 + array2
+    return concatenated_array
